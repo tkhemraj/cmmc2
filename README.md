@@ -1,17 +1,23 @@
 # CMMC 2.0 Compliance Assessment Tool
 
 > **Stop guessing. Start scoring.**
-> The only open-source tool that runs a full CMMC 2.0 self-assessment, calculates your official DoD SPRS score, and generates a ready-to-submit POAM — in under 10 seconds.
+> Open-source CMMC 2.0 self-assessment: official DoD SPRS score and a ready-to-submit POAM in under 10 seconds.
+>
+> Optional NIST AI RMF map for guardrails on private and public LLMs. Exempt it when AI is not in the mix.
+
+**Docs:** [docs/](docs/) · **AI map:** [mappings/](mappings/) · **Guardrails:** [docs/guardrails.md](docs/guardrails.md) · **When to skip AI:** [docs/scope-and-exemption.md](docs/scope-and-exemption.md)
 
 ---
 
 ## Why This Exists
 
-CMMC 2.0 certification is no longer optional for DoD contractors. If you handle **Controlled Unclassified Information (CUI)**, you need to demonstrate compliance with all 110 practices from **NIST SP 800-171 Rev 2** — or lose your contract eligibility.
+CMMC 2.0 is not optional for DoD contractors who handle **Controlled Unclassified Information (CUI)**. You need all 110 practices from **NIST SP 800-171 Rev 2** or you lose eligibility.
 
-The problem? Most organizations spend **weeks** manually working through spreadsheets, trying to map their controls to 14 domains, calculate a SPRS score they have no idea how to compute, and produce a POAM that satisfies an auditor.
+Most organizations spend weeks in spreadsheets mapping 14 domains, guessing an SPRS score, and writing a POAM an auditor will reject.
 
-This tool does all of that automatically.
+This tool does that work. Clients then asked the next question: *how do we constrain private models and public LLMs with the same control language, without standing up a second GRC program?* The [mappings/](mappings/) and [docs/](docs/) tree is that answer. It is guidance reused from the 110 — not a second score. If the client has no AI, mark the layer N/A and move on.
+
+Same controls also travel. Aerospace shops that sit between DoD programs and civilian product lines, and civilian companies that will never see a C3PAO, can use the STRONG rows as LLM guardrails without pretending they are in the DIB.
 
 ---
 
@@ -19,35 +25,45 @@ This tool does all of that automatically.
 
 | Feature | Details |
 |---|---|
-| **Full Practice Catalog** | All 110 NIST SP 800-171 Rev 2 practices across all 14 CMMC domains, with official CMMC IDs (e.g. `AC.L1-3.1.1`) |
-| **SPRS Score** | Calculates your official DoD Supplier Performance Risk System score (-203 to 110) using the DoD Assessment Methodology weights |
-| **Level Determination** | Tells you exactly which CMMC level you've achieved (0, 1, or 2) vs. your target |
-| **POAM Generation** | Produces a DoD-style Plan of Action & Milestones with auto-calculated milestone dates — HTML and CSV |
-| **HTML Dashboard** | Executive-ready compliance dashboard with domain score bars, color-coded findings, and full evidence table |
-| **Per-Domain Scoring** | Breakdown across all 14 domains: AC, AT, AU, CM, IA, IR, MA, MP, PE, PS, RA, CA, SC, SI |
-| **Evidence Tracking** | Every automated check logs its evidence so you can walk an auditor through exactly how you're compliant |
-| **JSON Round-Trip** | Save and reload assessments — re-generate any report format from a stored assessment file |
-| **AI RMF crosswalk** | Map all 110 practices to NIST AI RMF 1.0 (GOVERN / MAP / MEASURE / MANAGE) when models or agents can touch CUI — [`mappings/`](mappings/) |
+| **Full Practice Catalog** | All 110 NIST SP 800-171 Rev 2 practices across 14 CMMC domains, official CMMC IDs (e.g. `AC.L1-3.1.1`) |
+| **SPRS Score** | Official DoD Supplier Performance Risk System score (-203 to 110) using DoD Assessment Methodology weights |
+| **Level Determination** | Level 0 / 1 / 2 vs target |
+| **POAM Generation** | DoD-style Plan of Action & Milestones with milestone dates — HTML and CSV |
+| **HTML Dashboard** | Domain score bars, color-coded findings, evidence table |
+| **Per-Domain Scoring** | AC, AT, AU, CM, IA, IR, MA, MP, PE, PS, RA, CA, SC, SI |
+| **Evidence Tracking** | Automated checks log evidence for the auditor walkthrough |
+| **JSON Round-Trip** | Save and reload assessments |
+| **Optional AI RMF layer** | 110 practices mapped to GOVERN / MAP / MEASURE / MANAGE for private and public LLM guardrails. Exempt if AI is not in scope. |
 
 ---
 
-## CMMC → NIST AI RMF
+## Optional: CMMC → NIST AI RMF (LLM guardrails)
 
-This tool scores CMMC. It does not score AI RMF. The [`mappings/`](mappings/) folder is the layer between them.
+This tool **scores CMMC**. It does not score AI RMF.
 
-When an AI system, agent, or vendor LLM can touch CUI, CMMC already covers the process (`AC.L1-3.1.1`), the external system (`AC.L1-3.1.20`), the identity (`IA.L1-3.5.1`), the logs (`AU.L2-3.3.1`), FIPS crypto (`SC.L2-3.13.11`), and the SSP/POA&M (`CA.L2-3.12.2` / `3.12.4`). AI RMF GOVERN / MAP / MEASURE / MANAGE reuse that evidence. They do not replace it.
+When a private model, public LLM, Copilot-class assistant, or agent can see CUI, FCI, or other sensitive data, the same 110 practices are the guardrails:
 
-- Practice-level map: [`mappings/cmmc-to-ai-rmf.csv`](mappings/cmmc-to-ai-rmf.csv)
-- Reverse map (start from an AI RMF category): [`mappings/ai-rmf-to-cmmc.csv`](mappings/ai-rmf-to-cmmc.csv)
-- How to read it: [`mappings/README.md`](mappings/README.md)
+- the model is a **process** (`AC.L1-3.1.1`)
+- the vendor is an **external system** (`AC.L1-3.1.20`)
+- the agent needs an **identity** (`IA.L1-3.5.1`)
+- calls need **logs** (`AU.L2-3.3.1`)
+- CUI still needs **FIPS crypto** (`SC.L2-3.13.11`)
+- the model belongs in the **SSP and POAM** (`CA.L2-3.12.4`, `CA.L2-3.12.2`)
 
-Join a `cmmc2` NOT MET list to the practice CSV and filter `Strength = STRONG`. That is the joint POA&M. GOVERN 3, GOVERN 5, model TEVV, and vendor no-train clauses are still extra — CMMC will not invent them.
+If there is no AI in the authorization boundary, **exempt the layer**. Write one SSP sentence and test that staff cannot paste CUI into a browser chatbot. Do not invent an AI program.
+
+- [mappings/README.md](mappings/README.md) — how to read the map
+- [mappings/cmmc-to-ai-rmf.csv](mappings/cmmc-to-ai-rmf.csv) — 110 → AI RMF
+- [mappings/ai-rmf-to-cmmc.csv](mappings/ai-rmf-to-cmmc.csv) — reverse
+- [mappings/additional-controls.md](mappings/additional-controls.md) — extras CMMC will not emit
+- [docs/guardrails.md](docs/guardrails.md) — public vs private LLM
+- [docs/scope-and-exemption.md](docs/scope-and-exemption.md) — N/A rules
+
+Join a `cmmc2` NOT MET list to the practice CSV and filter `Strength = STRONG`. That is the joint POA&M.
 
 ---
 
 ## The Output
-
-One command gives you three deliverables:
 
 ```
 cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
@@ -62,16 +78,6 @@ cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
   Level 1:         17/17 (100.0%)
   Level 2:         74/110 (67.3%)
   Non-Compliant:   8 practice(s)
-
-  Domain Scores:
-    AC  [################----]  82.6%  (19/22)
-    AU  [###################-]  88.9%  (8/9)
-    CM  [############--------]  55.6%  (5/9)
-    IA  [####################]  100.0% (11/11)
-    IR  [####----------------]  0.0%   (0/3)
-    SC  [################----]  75.0%  (12/16)
-    SI  [####################]  100.0% (7/7)
-    ...
 ============================================================
 
   ✓ json:  reports/acme_corp_cmmc2.json
@@ -79,24 +85,24 @@ cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
   ✓ poam:  reports/acme_corp_cmmc2.poam.html
 ```
 
-- **`report.html`** — Full compliance dashboard your executives and auditors can actually read
-- **`poam.html`** — Ready-to-use POAM with findings, remediation steps, and milestone schedule
-- **`assessment.json`** — Machine-readable results you can load into any downstream tooling
+- **`report.html`** — dashboard executives and auditors can read
+- **`poam.html`** — findings, remediation, milestones
+- **`assessment.json`** — reload into downstream tooling
 
 ---
 
 ## Time Savings
 
-| Task | Manual Approach | This Tool |
-|---|---|
-| Map controls to NIST 800-171 | 2–3 days | Instant — catalog is built in |
-| Calculate SPRS score | 4–8 hours + spreadsheet errors | < 1 second |
-| Write POAM for gaps | 1–2 days per assessment | Instant, with milestone dates |
-| Build compliance dashboard | Custom report, hours of work | Auto-generated HTML |
-| Re-assess after remediation | Start over | Reload JSON, re-run |
+| Task | Manual | This tool |
+|---|---|---|
+| Map controls to NIST 800-171 | 2–3 days | Instant |
+| Calculate SPRS score | 4–8 hours | < 1 second |
+| Write POAM | 1–2 days | Instant |
+| Compliance dashboard | Custom report | Auto HTML |
+| Re-assess after remediation | Start over | Reload JSON |
 | **Total per assessment** | **~1–2 weeks** | **< 10 seconds** |
 
-For MSPs managing 10+ clients, that's the difference between compliance being a revenue stream and a time sink.
+For MSPs with 10+ clients, that is compliance as a workstream instead of a time sink.
 
 ---
 
@@ -108,36 +114,24 @@ cd cmmc2
 pip install -e .
 ```
 
-No external dependencies. Pure Python 3.9+. Runs on any machine.
+No external dependencies. Pure Python 3.9+.
 
 ---
 
 ## Usage
 
-### Run a full assessment
 ```bash
 cmmc2 assess --customer "Your Company" --level 2 --all --output-dir ./reports
-```
-
-### Single format
-```bash
 cmmc2 assess --customer "Your Company" --format html --output report.html
-```
-
-### Re-generate reports from a saved assessment
-```bash
 cmmc2 report --input assessment.json --format poam --output poam.html
-cmmc2 report --input assessment.json --format html --output dashboard.html
 ```
 
-### From Python
 ```python
 from cmmc2 import CMMCAssessor
 
 assessor = CMMCAssessor("Acme Corp", target_level=2)
 assessment = assessor.assess()
 assessor.print_summary()
-
 assessor.export("html", "dashboard.html")
 assessor.export("poam", "poam.html")
 assessor.export("json", "assessment.json")
@@ -145,58 +139,35 @@ assessor.export("json", "assessment.json")
 
 ---
 
-## The 14 CMMC Domains Covered
+## The 14 CMMC Domains
 
-| Domain | Practices | Key Controls |
-|---|---|
-| **AC** — Access Control | 22 | Least privilege, MFA, remote access, session management |
-| **AT** — Awareness & Training | 3 | Security awareness, role-based training, insider threat |
-| **AU** — Audit & Accountability | 9 | Event logging, audit review, time sync, log protection |
-| **CM** — Configuration Management | 9 | Baseline configs, change control, least functionality |
-| **IA** — Identification & Authentication | 11 | MFA, password policy, account management, FIPS crypto |
-| **IR** — Incident Response | 3 | IR capability, incident reporting, IR testing |
-| **MA** — Maintenance | 6 | Controlled maintenance, remote maintenance MFA |
-| **MP** — Media Protection | 9 | Media sanitization, encryption, removable storage |
-| **PE** — Physical Protection | 6 | Physical access, visitor control, alternate work sites |
-| **PS** — Personnel Security | 2 | Background checks, termination procedures |
-| **RA** — Risk Assessment | 3 | Risk assessments, vulnerability scanning, remediation |
-| **CA** — Security Assessment | 4 | Control assessments, POAM, continuous monitoring, SSP |
-| **SC** — System & Communications | 16 | Boundary protection, encryption in transit, FIPS crypto |
-| **SI** — System & Information Integrity | 7 | Patching, AV/EDR, vulnerability scanning, monitoring |
-
----
-
-## What Makes This Different
-
-**Other tools** give you a spreadsheet, a checklist, or a $50k consulting engagement.
-
-**This tool** gives you:
-- A running score you can track over time as you remediate gaps
-- Evidence capture baked into every automated check
-- A POAM your C3PAO auditor will actually respect
-- The exact SPRS number you need to self-report to the DoD's SPRS system
-- All of it in under 10 seconds, repeatable on every assessment cycle
+| Domain | Practices | Key controls |
+|---|---|---|
+| **AC** Access Control | 22 | Least privilege, remote access, CUI flow |
+| **AT** Awareness & Training | 3 | Awareness, role training, insider threat |
+| **AU** Audit & Accountability | 9 | Logs, review, time sync |
+| **CM** Configuration Management | 9 | Inventory, change control, least functionality |
+| **IA** Identification & Authentication | 11 | Identity, MFA, authenticators |
+| **IR** Incident Response | 3 | Capability, reporting, tests |
+| **MA** Maintenance | 6 | Controlled and remote maintenance |
+| **MP** Media Protection | 9 | Sanitize, encrypt, removable media |
+| **PE** Physical Protection | 6 | Facility and alternate sites |
+| **PS** Personnel Security | 2 | Screening, termination |
+| **RA** Risk Assessment | 3 | Assess, scan, remediate |
+| **CA** Security Assessment | 4 | Assess, POAM, monitor, SSP |
+| **SC** System & Communications | 16 | Boundary, TLS, FIPS, at rest |
+| **SI** System & Information Integrity | 7 | Patch, malware, monitor, unauthorized use |
 
 ---
 
-## Need Help With Your CMMC Compliance?
+## Need Help
 
-This tool is the foundation. The implementation is where organizations get stuck.
+The tool is the foundation. Implementation is where organizations get stuck.
 
-**Tarique Khemraj** is an MSP compliance specialist who helps defense contractors and their managed service providers get to CMMC Level 2 certification — from initial assessment through remediation, documentation, and C3PAO audit preparation.
-
-**What I can help with:**
-- Running this assessment against your actual environment (not demo data)
-- Remediating the gaps the tool finds — technically and procedurally
-- Building your System Security Plan (SSP)
-- Preparing your POAM and tracking it to closure
-- Getting ready for your C3PAO third-party assessment
-- Ongoing compliance management for MSPs managing multiple DoD clients
+**Tarique Khemraj** — MSP compliance work for defense contractors and providers getting to CMMC Level 2: assessment against the real environment, remediation, SSP, POAM, C3PAO prep, and optional LLM guardrail scope for dual-use and civilian shops.
 
 📧 **t.khemraj@gmail.com**
-🐙 **github.com/tkhemraj**
-
-> If your MSP is managing DoD contractor clients and CMMC is on the roadmap — reach out. This is what I do.
+🐙 **github.com/tkhemraj/cmmc2**
 
 ---
 
@@ -206,4 +177,4 @@ MIT — use it, fork it, build on it.
 
 ---
 
-*Built for the defense industrial base. NIST SP 800-171 Rev 2. CMMC 2.0 Model. DoD Assessment Methodology. NIST AI RMF 1.0 crosswalk is informational, not a substitute for either framework.*
+*NIST SP 800-171 Rev 2. CMMC 2.0. DoD Assessment Methodology. NIST AI RMF 1.0 map is optional guidance, not a substitute for either framework.*
