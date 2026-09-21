@@ -27,6 +27,21 @@ This tool does all of that automatically.
 | **Per-Domain Scoring** | Breakdown across all 14 domains: AC, AT, AU, CM, IA, IR, MA, MP, PE, PS, RA, CA, SC, SI |
 | **Evidence Tracking** | Every automated check logs its evidence so you can walk an auditor through exactly how you're compliant |
 | **JSON Round-Trip** | Save and reload assessments — re-generate any report format from a stored assessment file |
+| **AI RMF crosswalk** | Map all 110 practices to NIST AI RMF 1.0 (GOVERN / MAP / MEASURE / MANAGE) when models or agents can touch CUI — [`mappings/`](mappings/) |
+
+---
+
+## CMMC → NIST AI RMF
+
+This tool scores CMMC. It does not score AI RMF. The [`mappings/`](mappings/) folder is the layer between them.
+
+When an AI system, agent, or vendor LLM can touch CUI, CMMC already covers the process (`AC.L1-3.1.1`), the external system (`AC.L1-3.1.20`), the identity (`IA.L1-3.5.1`), the logs (`AU.L2-3.3.1`), FIPS crypto (`SC.L2-3.13.11`), and the SSP/POA&M (`CA.L2-3.12.2` / `3.12.4`). AI RMF GOVERN / MAP / MEASURE / MANAGE reuse that evidence. They do not replace it.
+
+- Practice-level map: [`mappings/cmmc-to-ai-rmf.csv`](mappings/cmmc-to-ai-rmf.csv)
+- Reverse map (start from an AI RMF category): [`mappings/ai-rmf-to-cmmc.csv`](mappings/ai-rmf-to-cmmc.csv)
+- How to read it: [`mappings/README.md`](mappings/README.md)
+
+Join a `cmmc2` NOT MET list to the practice CSV and filter `Strength = STRONG`. That is the joint POA&M. GOVERN 3, GOVERN 5, model TEVV, and vendor no-train clauses are still extra — CMMC will not invent them.
 
 ---
 
@@ -49,13 +64,13 @@ cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
   Non-Compliant:   8 practice(s)
 
   Domain Scores:
-    AC  [████████████████░░░░]  82.6%  (19/22)
-    AU  [███████████████████░]  88.9%  (8/9)
-    CM  [████████████░░░░░░░░]  55.6%  (5/9)
-    IA  [████████████████████]  100.0% (11/11)
-    IR  [████░░░░░░░░░░░░░░░░]  0.0%   (0/3)
-    SC  [████████████████░░░░]  75.0%  (12/16)
-    SI  [████████████████████]  100.0% (7/7)
+    AC  [################----]  82.6%  (19/22)
+    AU  [###################-]  88.9%  (8/9)
+    CM  [############--------]  55.6%  (5/9)
+    IA  [####################]  100.0% (11/11)
+    IR  [####----------------]  0.0%   (0/3)
+    SC  [################----]  75.0%  (12/16)
+    SI  [####################]  100.0% (7/7)
     ...
 ============================================================
 
@@ -73,7 +88,7 @@ cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
 ## Time Savings
 
 | Task | Manual Approach | This Tool |
-|---|---|---|
+|---|---|
 | Map controls to NIST 800-171 | 2–3 days | Instant — catalog is built in |
 | Calculate SPRS score | 4–8 hours + spreadsheet errors | < 1 second |
 | Write POAM for gaps | 1–2 days per assessment | Instant, with milestone dates |
@@ -133,7 +148,7 @@ assessor.export("json", "assessment.json")
 ## The 14 CMMC Domains Covered
 
 | Domain | Practices | Key Controls |
-|---|---|---|
+|---|---|
 | **AC** — Access Control | 22 | Least privilege, MFA, remote access, session management |
 | **AT** — Awareness & Training | 3 | Security awareness, role-based training, insider threat |
 | **AU** — Audit & Accountability | 9 | Event logging, audit review, time sync, log protection |
@@ -191,4 +206,4 @@ MIT — use it, fork it, build on it.
 
 ---
 
-*Built for the defense industrial base. NIST SP 800-171 Rev 2. CMMC 2.0 Model. DoD Assessment Methodology.*
+*Built for the defense industrial base. NIST SP 800-171 Rev 2. CMMC 2.0 Model. DoD Assessment Methodology. NIST AI RMF 1.0 crosswalk is informational, not a substitute for either framework.*
