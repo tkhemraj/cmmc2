@@ -10,6 +10,8 @@ What if the people who have to live with those controls are deployed without ove
 
 That is a control problem and a cost problem. Treat only one and you fail the other.
 
+I live in Long Beach and spend a lot of time with DoD-aligned aerospace companies that are not “100 percent” — they do not require TS or Secret for most of the people in the building. They sit adjacent to the cleared program. They still ship civilian products and services, often from the same engineering system that talks to a prime. Knowing the controls their government counterparts already run, and lining up to them without pretending you are a SAP shop, is how you stay in the conversation when the customer asks how you handle data.
+
 ## Why CMMC was the right basis
 
 NIST SP 800-53 is the parent catalog. It is large on purpose: families, baselines, overlays, organization-defined parameters. Correct for a federal system with a named authorizing official.
@@ -18,7 +20,7 @@ Most of the people who called did not have that. They had CUI or something that 
 
 Once they could walk AC, IA, AU, SC, CM, RA, and CA in English, 800-53 stopped looking like a wall of identifiers. Access Control is still Access Control. Identification and Authentication is still how you know the user — or the process acting for the user. System and Communications Protection is still the boundary and the crypto. 800-171 `3.13.11` and the 800-53 SC-8 / SC-13 conversation are the same fight: sensitive data rides validated cryptography, or it does not ride.
 
-That is what they meant by liking CMMC as the basis. Not that CMMC replaces 800-53. That CMMC is the on-ramp that makes 800-53 usable.
+That is what they meant by liking CMMC as the basis. Not that CMMC replaces 800-53. That CMMC is the on-ramp that makes 800-53 usable — including for adjacent aerospace that will never badge into a SCIF.
 
 ## What they asked for next
 
@@ -76,7 +78,9 @@ MSPs feel it across ten clients. One catalog, one POA&M shape, one exemption sen
 
 DoD contractors already on Level 2 — same language, model written into the boundary.
 
-Aerospace and dual-use teams — one engineering system, CUI on the program, commercial data on the product. 800-171 to the program office, 800-53 families to civilian quality. Same locks.
+Adjacent aerospace — Long Beach / LA basin and everywhere like it. DoD-aligned, not fully cleared. No TS or Secret required for most employees. They still sit next to a prime that *does* run 800-171 and 800-53. Aligning to those counterpart controls is how you sell civilian aircraft parts, software, and services without inventing a second security culture. You are not claiming a clearance. You are speaking the same lock language.
+
+Dual-use engineering systems — CUI on the program, commercial data on the product. 800-171 to the program office, 800-53 families to civilian quality. Same locks.
 
 Civilian companies with no SPRS obligation — ignore the score if you want. Keep the 14 families and the STRONG rows. Enough to stop treating a prompt as if it were not a data flow.
 
