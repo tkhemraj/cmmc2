@@ -5,7 +5,7 @@
 >
 > Optional NIST AI RMF map for guardrails on private and public LLMs. Exempt it when AI is not in the mix.
 
-**Docs:** [docs/](docs/) · **AI map:** [mappings/](mappings/) · **Guardrails:** [docs/guardrails.md](docs/guardrails.md) · **When to skip AI:** [docs/scope-and-exemption.md](docs/scope-and-exemption.md)
+**Docs:** [docs/](docs/) · **AI map:** [mappings/](mappings/) · **Guardrails:** [docs/guardrails.md](docs/guardrails.md) · **When to skip AI:** [docs/scope-and-exemption.md](docs/scope-and-exemption.md) · **Unsupervised template:** [docs/templates/unsupervised-deployment.md](docs/templates/unsupervised-deployment.md)
 
 ---
 
@@ -17,7 +17,7 @@ Most organizations spend weeks in spreadsheets mapping 14 domains, guessing an S
 
 This tool does that work. Clients then asked the next question: *how do we constrain private models and public LLMs with the same control language, without standing up a second GRC program?* The [mappings/](mappings/) and [docs/](docs/) tree is that answer. It is guidance reused from the 110 — not a second score. If the client has no AI, mark the layer N/A and move on.
 
-Same controls also travel. Aerospace shops that sit between DoD programs and civilian product lines, and civilian companies that will never see a C3PAO, can use the STRONG rows as LLM guardrails without pretending they are in the DIB.
+Same controls also travel. Built from work in Long Beach with DoD-aligned aerospace that is **adjacent**, not fully cleared — no TS or Secret required for most employees — and still selling civilian products and services next to primes who *do* run 800-171 and 800-53. Knowing those counterpart controls, and lining up to them, is how an uncleared shop stays in the deal without pretending it is a SAP program. Civilian companies that will never see a C3PAO can use the same STRONG rows as LLM guardrails without pretending they are in the DIB.
 
 ---
 
@@ -58,6 +58,7 @@ If there is no AI in the authorization boundary, **exempt the layer**. Write one
 - [mappings/additional-controls.md](mappings/additional-controls.md) — extras CMMC will not emit
 - [docs/guardrails.md](docs/guardrails.md) — public vs private LLM
 - [docs/scope-and-exemption.md](docs/scope-and-exemption.md) — N/A rules
+- [docs/templates/unsupervised-deployment.md](docs/templates/unsupervised-deployment.md) — no-assessor template
 
 Join a `cmmc2` NOT MET list to the practice CSV and filter `Strength = STRONG`. That is the joint POA&M.
 
@@ -85,25 +86,6 @@ cmmc2 assess --customer "Acme Corp" --all --output-dir ./reports/
   ✓ poam:  reports/acme_corp_cmmc2.poam.html
 ```
 
-- **`report.html`** — dashboard executives and auditors can read
-- **`poam.html`** — findings, remediation, milestones
-- **`assessment.json`** — reload into downstream tooling
-
----
-
-## Time Savings
-
-| Task | Manual | This tool |
-|---|---|---|
-| Map controls to NIST 800-171 | 2–3 days | Instant |
-| Calculate SPRS score | 4–8 hours | < 1 second |
-| Write POAM | 1–2 days | Instant |
-| Compliance dashboard | Custom report | Auto HTML |
-| Re-assess after remediation | Start over | Reload JSON |
-| **Total per assessment** | **~1–2 weeks** | **< 10 seconds** |
-
-For MSPs with 10+ clients, that is compliance as a workstream instead of a time sink.
-
 ---
 
 ## Installation
@@ -118,53 +100,11 @@ No external dependencies. Pure Python 3.9+.
 
 ---
 
-## Usage
-
-```bash
-cmmc2 assess --customer "Your Company" --level 2 --all --output-dir ./reports
-cmmc2 assess --customer "Your Company" --format html --output report.html
-cmmc2 report --input assessment.json --format poam --output poam.html
-```
-
-```python
-from cmmc2 import CMMCAssessor
-
-assessor = CMMCAssessor("Acme Corp", target_level=2)
-assessment = assessor.assess()
-assessor.print_summary()
-assessor.export("html", "dashboard.html")
-assessor.export("poam", "poam.html")
-assessor.export("json", "assessment.json")
-```
-
----
-
-## The 14 CMMC Domains
-
-| Domain | Practices | Key controls |
-|---|---|---|
-| **AC** Access Control | 22 | Least privilege, remote access, CUI flow |
-| **AT** Awareness & Training | 3 | Awareness, role training, insider threat |
-| **AU** Audit & Accountability | 9 | Logs, review, time sync |
-| **CM** Configuration Management | 9 | Inventory, change control, least functionality |
-| **IA** Identification & Authentication | 11 | Identity, MFA, authenticators |
-| **IR** Incident Response | 3 | Capability, reporting, tests |
-| **MA** Maintenance | 6 | Controlled and remote maintenance |
-| **MP** Media Protection | 9 | Sanitize, encrypt, removable media |
-| **PE** Physical Protection | 6 | Facility and alternate sites |
-| **PS** Personnel Security | 2 | Screening, termination |
-| **RA** Risk Assessment | 3 | Assess, scan, remediate |
-| **CA** Security Assessment | 4 | Assess, POAM, monitor, SSP |
-| **SC** System & Communications | 16 | Boundary, TLS, FIPS, at rest |
-| **SI** System & Information Integrity | 7 | Patch, malware, monitor, unauthorized use |
-
----
-
 ## Need Help
 
 The tool is the foundation. Implementation is where organizations get stuck.
 
-**Tarique Khemraj** — MSP compliance work for defense contractors and providers getting to CMMC Level 2: assessment against the real environment, remediation, SSP, POAM, C3PAO prep, and optional LLM guardrail scope for dual-use and civilian shops.
+**Tarique Khemraj** (Long Beach, CA) — CMMC and control alignment for defense contractors **and** adjacent aerospace that is DoD-aligned without being a cleared program: no TS/Secret required for most staff, civilian products and services next to primes who already speak 800-171 / 800-53. Assessment against the real environment, remediation, SSP, POAM, C3PAO prep, optional LLM guardrail scope.
 
 📧 **t.khemraj@gmail.com**
 🐙 **github.com/tkhemraj/cmmc2**
