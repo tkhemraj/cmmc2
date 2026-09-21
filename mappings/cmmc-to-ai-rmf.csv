@@ -1,4 +1,111 @@
-CMMC ID,NIST 800-171,Domain,CMMC Level,Practice (short),Primary AI RMF,Primary category,Secondary AI RMF,Strength,AI-touch note (CUI in prompts / agents / vendor models),GAP if you only do CMMC
-AC.L1-3.1.1,3.1.1,AC,1,"Limit system access to authorized users, processes, devices",GOVERN,GOVERN 1 / GOVERN 2,MAP 2,STRONG,Agents and tool-calling models are processes acting on behalf of users. Inventory them as identities or you fail both frameworks.,Must still document intended AI purpose (MAP 1) — CMMC does not.
-AC.L1-3.1.2,3.1.2,AC,1,Limit access to authorized transactions and functions,GOVERN,GOVERN 1,MANAGE 1,STRONG,"Scope what the model is allowed to invoke (tools, tickets, file writes). Least-function for agents.",Need explicit AI use-policy; AC alone is permission bits.
-AC.L2-3.1.3,3.1.3,AC,2,Control CUI information flow,MAP,MAP 4,MANAGE 2,STRONG,"Prompt in, completion out, RAG retrieve, tool result — those are CUI flows. DLP on prompts is this control.",Does not score model leakage / membership inference (MEASURE).
+CMMC ID,NIST 800-171,Domain,CMMC Level,Practice (short),Primary AI RMF,Primary category,Secondary AI RMF,Strength
+AC.L1-3.1.1,3.1.1,AC,1,"Limit system access to authorized users, processes, devices",GOVERN,GOVERN 1 / GOVERN 2,MAP 2,STRONG
+AC.L1-3.1.2,3.1.2,AC,1,Limit access to authorized transactions and functions,GOVERN,GOVERN 1,MANAGE 1,STRONG
+AC.L2-3.1.3,3.1.3,AC,2,Control CUI information flow,MAP,MAP 4,MANAGE 2,STRONG
+AC.L2-3.1.4,3.1.4,AC,2,Separation of duties,GOVERN,GOVERN 2,MANAGE 1,PARTIAL
+AC.L2-3.1.5,3.1.5,AC,2,Least privilege,GOVERN,GOVERN 1,MAP 2,STRONG
+AC.L2-3.1.6,3.1.6,AC,2,Non-privileged accounts for nonsecurity functions,GOVERN,GOVERN 1,MANAGE 1,PARTIAL
+AC.L2-3.1.7,3.1.7,AC,2,Prevent non-privileged users from running privileged functions,MANAGE,MANAGE 1,GOVERN 1,PARTIAL
+AC.L2-3.1.8,3.1.8,AC,2,Limit unsuccessful logon attempts,MANAGE,MANAGE 4,MEASURE 2,PARTIAL
+AC.L2-3.1.9,3.1.9,AC,2,Provide privacy / security notices,GOVERN,GOVERN 4,MAP 1,PARTIAL
+AC.L2-3.1.10,3.1.10,AC,2,Use session lock,MANAGE,MANAGE 4,—,PARTIAL
+AC.L2-3.1.11,3.1.11,AC,2,Terminate user sessions after defined conditions,MANAGE,MANAGE 4,MEASURE 2,PARTIAL
+AC.L2-3.1.12,3.1.12,AC,2,Monitor and control remote access,MAP,MAP 1,MANAGE 4,STRONG
+AC.L2-3.1.13,3.1.13,AC,2,Cryptographic mechanisms for remote access confidentiality,MANAGE,MANAGE 2,GOVERN 6,STRONG
+AC.L2-3.1.14,3.1.14,AC,2,Route remote access through managed access control points,MAP,MAP 4,GOVERN 6,STRONG
+AC.L2-3.1.15,3.1.15,AC,2,Authorize remote execution of privileged commands,GOVERN,GOVERN 2,MANAGE 1,PARTIAL
+AC.L2-3.1.16,3.1.16,AC,2,Authorize wireless access prior to connection,MAP,MAP 4,MANAGE 2,PARTIAL
+AC.L2-3.1.17,3.1.17,AC,2,Protect wireless access with authentication and encryption,MANAGE,MANAGE 2,—,PARTIAL
+AC.L2-3.1.18,3.1.18,AC,2,Control connection of mobile devices,MAP,MAP 4,GOVERN 6,PARTIAL
+AC.L2-3.1.19,3.1.19,AC,2,Encrypt CUI on mobile devices / mobile computing,MANAGE,MANAGE 2,—,PARTIAL
+AC.L1-3.1.20,3.1.20,AC,1,Control / verify connections to external systems,GOVERN,GOVERN 6,MAP 4,STRONG
+AC.L2-3.1.21,3.1.21,AC,2,Limit use of portable storage on systems,MANAGE,MANAGE 2,MAP 4,PARTIAL
+AC.L2-3.1.22,3.1.22,AC,2,Control CUI posted on publicly accessible systems,MANAGE,MANAGE 2,MEASURE 2,STRONG
+AT.L1-3.2.1,3.2.1,AT,1,"Security awareness for managers, admins, users",GOVERN,GOVERN 2 / GOVERN 4,MEASURE 3,STRONG
+AT.L2-3.2.2,3.2.2,AT,2,Literacy training on cyber risks / duties,GOVERN,GOVERN 2,MEASURE 3,STRONG
+AT.L2-3.2.3,3.2.3,AT,2,Insider threat awareness,GOVERN,GOVERN 4,MANAGE 4,PARTIAL
+AU.L2-3.3.1,3.3.1,AU,2,Create and retain audit logs,MEASURE,MEASURE 2 / MEASURE 4,MANAGE 4,STRONG
+AU.L2-3.3.2,3.3.2,AU,2,Ensure actions can be traced to users,MEASURE,MEASURE 2,GOVERN 2,STRONG
+AU.L2-3.3.3,3.3.3,AU,2,Review / update logged events,MEASURE,MEASURE 1,MANAGE 4,PARTIAL
+AU.L2-3.3.4,3.3.4,AU,2,Alert on audit logging process failure,MANAGE,MANAGE 4,MEASURE 2,PARTIAL
+AU.L2-3.3.5,3.3.5,AU,2,Correlate / review audit records,MEASURE,MEASURE 2,MANAGE 4,STRONG
+AU.L2-3.3.6,3.3.6,AU,2,Reduce audit records / reports,MEASURE,MEASURE 1,GOVERN 4,PARTIAL
+AU.L2-3.3.7,3.3.7,AU,2,Time synchronization,MEASURE,MEASURE 2,—,PARTIAL
+AU.L2-3.3.8,3.3.8,AU,2,Protect audit information,MANAGE,MANAGE 2,GOVERN 1,STRONG
+AU.L2-3.3.9,3.3.9,AU,2,Limit management of audit logging,GOVERN,GOVERN 2,—,PARTIAL
+CM.L2-3.4.1,3.4.1,CM,2,Baseline / inventory organizational systems,MAP,MAP 2 / MAP 4,GOVERN 1,STRONG
+CM.L2-3.4.2,3.4.2,CM,2,Establish / enforce security config settings,MANAGE,MANAGE 1,MEASURE 2,PARTIAL
+CM.L2-3.4.3,3.4.3,CM,2,"Track, review, approve, log changes",MANAGE,MANAGE 1,MAP 4,STRONG
+CM.L2-3.4.4,3.4.4,CM,2,Analyze security impact of changes,MAP,MAP 4,MEASURE 2,STRONG
+CM.L2-3.4.5,3.4.5,CM,2,Define / restrict access to change functions,GOVERN,GOVERN 2,MANAGE 1,PARTIAL
+CM.L2-3.4.6,3.4.6,CM,2,Least functionality,MANAGE,MANAGE 1,MAP 3,STRONG
+CM.L2-3.4.7,3.4.7,CM,2,"Restrict / disable unnecessary programs, ports, protocols, services",MANAGE,MANAGE 1,MAP 4,PARTIAL
+CM.L2-3.4.8,3.4.8,CM,2,Apply deny-by-exception for software,MANAGE,MANAGE 2,GOVERN 6,PARTIAL
+CM.L2-3.4.9,3.4.9,CM,2,Control / monitor user-installed software,MAP,MAP 4,GOVERN 6,PARTIAL
+IA.L1-3.5.1,3.5.1,IA,1,"Identify users, processes, devices",MAP,MAP 4,GOVERN 2,STRONG
+IA.L1-3.5.2,3.5.2,IA,1,Authenticate before access,GOVERN,GOVERN 1,MANAGE 2,STRONG
+IA.L2-3.5.3,3.5.3,IA,2,Multifactor authentication,GOVERN,GOVERN 1,MANAGE 2,STRONG
+IA.L2-3.5.4,3.5.4,IA,2,Replay-resistant authentication,MANAGE,MANAGE 2,—,PARTIAL
+IA.L2-3.5.5,3.5.5,IA,2,Prevent identifier reuse,GOVERN,GOVERN 2,—,PARTIAL
+IA.L2-3.5.6,3.5.6,IA,2,Disable identifiers after inactivity,MANAGE,MANAGE 4,—,PARTIAL
+IA.L2-3.5.7,3.5.7,IA,2,Password complexity,MANAGE,MANAGE 2,—,PARTIAL
+IA.L2-3.5.8,3.5.8,IA,2,Prohibit password reuse,MANAGE,MANAGE 2,—,PARTIAL
+IA.L2-3.5.9,3.5.9,IA,2,Temporary password change on first use,MANAGE,MANAGE 2,—,PARTIAL
+IA.L2-3.5.10,3.5.10,IA,2,Protect authenticators,GOVERN,GOVERN 6,MANAGE 2,STRONG
+IA.L2-3.5.11,3.5.11,IA,2,Obscure authentication feedback,MANAGE,MANAGE 2,—,PARTIAL
+IR.L2-3.6.1,3.6.1,IR,2,Establish operational incident-handling capability,MANAGE,MANAGE 4,GOVERN 1,STRONG
+IR.L2-3.6.2,3.6.2,IR,2,"Track, document, report incidents",MANAGE,MANAGE 4,MEASURE 2,STRONG
+IR.L2-3.6.3,3.6.3,IR,2,Test the IR capability,MEASURE,MEASURE 2,MANAGE 4,PARTIAL
+MA.L2-3.7.1,3.7.1,MA,2,Perform system maintenance,MANAGE,MANAGE 4,—,PARTIAL
+MA.L2-3.7.2,3.7.2,MA,2,Control maintenance tools / personnel,GOVERN,GOVERN 6,MANAGE 2,PARTIAL
+MA.L2-3.7.3,3.7.3,MA,2,Sanitize equipment before offsite,MANAGE,MANAGE 2,MAP 4,PARTIAL
+MA.L2-3.7.4,3.7.4,MA,2,Check media for malicious code before use,MEASURE,MEASURE 4,MANAGE 2,PARTIAL
+MA.L2-3.7.5,3.7.5,MA,2,Multifactor for nonlocal maintenance,GOVERN,GOVERN 6,MANAGE 2,PARTIAL
+MA.L2-3.7.6,3.7.6,MA,2,Supervise nonlocal maintenance,GOVERN,GOVERN 6,—,PARTIAL
+MP.L2-3.8.1,3.8.1,MP,2,Protect / physically control CUI media,MANAGE,MANAGE 2,MAP 4,PARTIAL
+MP.L2-3.8.2,3.8.2,MP,2,Limit access to CUI on media,GOVERN,GOVERN 1,—,PARTIAL
+MP.L2-3.8.3,3.8.3,MP,2,Sanitize / destroy CUI media,MANAGE,MANAGE 4,MAP 4,STRONG
+MP.L2-3.8.4,3.8.4,MP,2,Mark CUI media,MAP,MAP 1,GOVERN 1,PARTIAL
+MP.L2-3.8.5,3.8.5,MP,2,Control CUI media during transport,MANAGE,MANAGE 2,—,PARTIAL
+MP.L2-3.8.6,3.8.6,MP,2,Cryptographic protection on CUI during transport,MANAGE,MANAGE 2,—,PARTIAL
+MP.L2-3.8.7,3.8.7,MP,2,Control use of removable media,MANAGE,MANAGE 2,MAP 4,PARTIAL
+MP.L2-3.8.8,3.8.8,MP,2,Prohibit portable storage with no identifiable owner,MANAGE,MANAGE 2,—,PARTIAL
+MP.L2-3.8.9,3.8.9,MP,2,Protect backup CUI at storage locations,MANAGE,MANAGE 2,MAP 4,PARTIAL
+PS.L2-3.9.1,3.9.1,PS,2,Screen individuals before access to CUI systems,GOVERN,GOVERN 2,GOVERN 3,PARTIAL
+PS.L2-3.9.2,3.9.2,PS,2,Protect CUI during personnel actions (xfer/term),GOVERN,GOVERN 2,MANAGE 4,STRONG
+PE.L1-3.10.1,3.10.1,PE,1,Limit physical access,MANAGE,MANAGE 2,—,PARTIAL
+PE.L1-3.10.2,3.10.2,PE,1,Protect and monitor the physical facility,MANAGE,MANAGE 2,—,PARTIAL
+PE.L2-3.10.3,3.10.3,PE,2,Escort visitors / monitor visitor activity,GOVERN,GOVERN 6,—,PARTIAL
+PE.L2-3.10.4,3.10.4,PE,2,Maintain audit logs of physical access,MEASURE,MEASURE 2,—,PARTIAL
+PE.L2-3.10.5,3.10.5,PE,2,Control / manage physical access devices,MANAGE,MANAGE 2,—,PARTIAL
+PE.L2-3.10.6,3.10.6,PE,2,Enforce safeguarding at alternate work sites,MAP,MAP 1,MANAGE 2,PARTIAL
+RA.L2-3.11.1,3.11.1,RA,2,Periodically assess risk,MAP,MAP 5,GOVERN 1 / MEASURE 1,STRONG
+RA.L2-3.11.2,3.11.2,RA,2,Scan for vulnerabilities,MEASURE,MEASURE 2 / MEASURE 4,MANAGE 1,PARTIAL
+RA.L2-3.11.3,3.11.3,RA,2,Remediate vulnerabilities,MANAGE,MANAGE 1,MEASURE 2,PARTIAL
+CA.L2-3.12.1,3.12.1,CA,2,Periodically assess security controls,MEASURE,MEASURE 2,GOVERN 1,STRONG
+CA.L2-3.12.2,3.12.2,CA,2,Develop / implement POA&M,MANAGE,MANAGE 1,GOVERN 1,STRONG
+CA.L2-3.12.3,3.12.3,CA,2,Monitor security controls continuously,MEASURE,MEASURE 4,MANAGE 4,STRONG
+CA.L2-3.12.4,3.12.4,CA,2,"Develop, document, periodically update SSP",GOVERN,GOVERN 1,MAP 1,STRONG
+SC.L1-3.13.1,3.13.1,SC,1,Protect communications at boundaries,MAP,MAP 4,MANAGE 2,STRONG
+SC.L2-3.13.2,3.13.2,SC,2,Architectural designs / system isolation,MAP,MAP 2,MANAGE 1,STRONG
+SC.L2-3.13.3,3.13.3,SC,2,Separate user functionality from system management,GOVERN,GOVERN 2,—,PARTIAL
+SC.L2-3.13.4,3.13.4,SC,2,Prevent unauthorized transfer via shared resources,MANAGE,MANAGE 2,MEASURE 2,STRONG
+SC.L2-3.13.5,3.13.5,SC,2,Subnetworks for publicly accessible components,MAP,MAP 2,MANAGE 2,PARTIAL
+SC.L2-3.13.6,3.13.6,SC,2,Deny network traffic by default; allow by exception,MANAGE,MANAGE 1,MAP 4,STRONG
+SC.L2-3.13.7,3.13.7,SC,2,Prevent split tunneling,MANAGE,MANAGE 2,—,PARTIAL
+SC.L2-3.13.8,3.13.8,SC,2,Crypto to prevent disclosure in transmission,MANAGE,MANAGE 2,GOVERN 6,STRONG
+SC.L2-3.13.9,3.13.9,SC,2,Terminate network connections after inactivity,MANAGE,MANAGE 4,—,PARTIAL
+SC.L2-3.13.10,3.13.10,SC,2,Establish / manage cryptographic keys,GOVERN,GOVERN 6,MANAGE 2,STRONG
+SC.L2-3.13.11,3.13.11,SC,2,Employ FIPS-validated cryptography,GOVERN,GOVERN 1,MANAGE 2,STRONG
+SC.L2-3.13.12,3.13.12,SC,2,Prohibit remote activation of collaborative sensors,MANAGE,MANAGE 2,MAP 4,PARTIAL
+SC.L2-3.13.13,3.13.13,SC,2,Control / monitor mobile code,MEASURE,MEASURE 4,MANAGE 2,PARTIAL
+SC.L2-3.13.14,3.13.14,SC,2,Control / monitor VoIP,MAP,MAP 4,—,PARTIAL
+SC.L2-3.13.15,3.13.15,SC,2,Protect authenticity of communications sessions,MANAGE,MANAGE 2,MEASURE 2,PARTIAL
+SC.L2-3.13.16,3.13.16,SC,2,Protect CUI at rest,MANAGE,MANAGE 2,MAP 4,STRONG
+SI.L1-3.14.1,3.14.1,SI,1,"Identify, report, correct flaws in a timely manner",MANAGE,MANAGE 1,MEASURE 2,PARTIAL
+SI.L1-3.14.2,3.14.2,SI,1,Provide protection from malicious code,MEASURE,MEASURE 4,MANAGE 2,PARTIAL
+SI.L2-3.14.3,3.14.3,SI,2,Monitor security alerts / advisories; take action,MEASURE,MEASURE 4,MANAGE 1,PARTIAL
+SI.L2-3.14.4,3.14.4,SI,2,Update malicious-code protection when new releases available,MEASURE,MEASURE 4,—,PARTIAL
+SI.L2-3.14.5,3.14.5,SI,2,Scan files from external sources,MEASURE,MEASURE 4,GOVERN 6,PARTIAL
+SI.L2-3.14.6,3.14.6,SI,2,Monitor systems including inbound/outbound comms,MEASURE,MEASURE 2 / MEASURE 4,MANAGE 4,STRONG
+SI.L2-3.14.7,3.14.7,SI,2,Identify unauthorized use of organizational systems,MAP,MAP 4,MANAGE 4,STRONG
