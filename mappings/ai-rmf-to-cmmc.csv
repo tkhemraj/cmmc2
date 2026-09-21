@@ -1,0 +1,20 @@
+AI RMF function,Category,What NIST wants,CMMC practices that help,Strength of reuse,Still missing (do this extra)
+GOVERN,GOVERN 1 Policies & processes,Org policies for mapping/measuring/managing AI risk,CA.L2-3.12.4 SSP; CA.L2-3.12.2 POA&M; AC.L1-3.1.1/2; AC.L1-3.1.20,PARTIAL,"Written AI-use policy, risk appetite for models, approved-tool list. CMMC SSP is necessary but not an AI policy."
+GOVERN,GOVERN 2 Accountability & workforce,"Roles, training, empowerment",PS.L2-3.9.1/2; AT.L2-3.2.1/2; AC.L2-3.1.4/5; IA.L1-3.5.1; AU.L2-3.3.2,PARTIAL,"Named AI risk owner, RACI for model promote, AI-specific training objectives."
+GOVERN,GOVERN 3 DEI in AI workforce,Diversity/equity/inclusion/accessibility in AI lifecycle,— none,GAP,No CMMC analogue. Do not map PS screening to DEI.
+GOVERN,GOVERN 4 Culture & communication of AI risk,Talk about AI risks/benefits,AT.L1-3.2.1; AC.L2-3.1.9; AU.L2-3.3.6,PARTIAL,"Leadership AI-risk reporting cadence, not just a login banner."
+GOVERN,GOVERN 5 Stakeholder engagement,Engage relevant AI actors,IR.L2-3.6.2 (incident notify only),GAP,User/impacted-community engagement is outside CMMC.
+GOVERN,GOVERN 6 Third-party / supply chain,"Policies for third-party data, software, AI",AC.L1-3.1.20; AC.L2-3.1.14; IA.L2-3.5.10; SC.L2-3.13.8/11; MA.L2-3.7.2/5/6; SI.L2-3.14.5,STRONG,"Contract clauses: no training on CUI, purge, FIPS, subprocessors, eval rights."
+MAP,MAP 1 Context,"Purpose, laws, setting, expectations",CA.L2-3.12.4; AC.L2-3.1.9; MP.L2-3.8.4; PE.L2-3.10.6,PARTIAL,Intended-purpose statement and prohibited uses per model.
+MAP,MAP 2 Categorization,Classify systems by capability and risk,CM.L2-3.4.1; SC.L2-3.13.2/5; AC.L1-3.1.1,PARTIAL,AI risk tier (CUI-touch vs public chatbot) is extra taxonomy.
+MAP,MAP 3 Capabilities vs limits,Characterize what the system can/cannot do,CM.L2-3.4.6 least functionality,PARTIAL,"Model cards, eval scores, known failure modes."
+MAP,MAP 4 Components & third parties,Map risks across components and vendors,CM.L2-3.4.1/3/4; AC.L1-3.1.20; AC.L2-3.1.3/14/18; IA.L1-3.5.1; SC.L1-3.13.1; SI.L2-3.14.7,STRONG,Data-lineage / training-data provenance still extra.
+MAP,MAP 5 Impacts,"Impacts to people, orgs, society",RA.L2-3.11.1,PARTIAL,"CMMC RA is C/I/A of CUI, not bias, safety, or group harm."
+MEASURE,MEASURE 1 Methods & metrics,Select metrics for mapped risks,AU.L2-3.3.3/6; RA.L2-3.11.1,PARTIAL,"Need AI metrics: jailbreak rate, retrieval leak rate, hallucination on CUI facts."
+MEASURE,MEASURE 2 TEVV,"Test, evaluate, verify, validate",AU.L2-3.3.1/2/5; CA.L2-3.12.1; IR.L2-3.6.3; RA.L2-3.11.2; SI.L2-3.14.6,PARTIAL,"Security tests ≠ model evals. Add red-team, output-filter tests, grounding tests."
+MEASURE,MEASURE 3 Actor competency,Are people competent to run this?,AT.L2-3.2.1/2,PARTIAL,Skill matrix for prompt ops / model owners.
+MEASURE,MEASURE 4 External inputs,"Monitor third-party models, data, APIs",SI.L2-3.14.3/5/6; AU.L2-3.3.1; CA.L2-3.12.3; MA.L2-3.7.4,PARTIAL,"Drift, vendor model-swap notification, dataset change alerts."
+MANAGE,MANAGE 1 Prioritize & treat risk,Treat highest risks first,CA.L2-3.12.2; RA.L2-3.11.3; CM.L2-3.4.3/6; AC.L2-3.1.5; SI.L1-3.14.1,STRONG,POA&M already ranks work. Add AI items to it.
+MANAGE,MANAGE 2 Benefit vs risk / response options,Choose accept/mitigate/transfer/avoid,AC.L2-3.1.3/22; SC.L2-3.13.4/6/8/11/16; MP.L2-3.8.3,PARTIAL,Decision record to ban public LLM for CUI is the avoid option.
+MANAGE,MANAGE 3 Third-party residual risk,Manage leftover vendor risk,Same as GOVERN 6 practice set,PARTIAL,"Ongoing vendor review, not one-time onboarding."
+MANAGE,"MANAGE 4 Monitor, respond, decommission","Incidents, monitoring, retirement",IR.L2-3.6.1/2; CA.L2-3.12.3; AU.L2-3.3.4; SI.L2-3.14.6/7; MP.L2-3.8.3; PS.L2-3.9.2; IA.L2-3.5.6,STRONG,"Add model-retirement runbook (weights, indexes, keys, vendor purge)."
